@@ -11,7 +11,7 @@ from itertools import zip_longest
 from pathlib import Path
 
 import argcomplete
-from PyPDF2 import PdfFileWriter, PdfFileReader
+from PyPDF2 import PdfWriter, PdfReader
 from funcy import cat
 
 
@@ -38,19 +38,19 @@ def main():
     argcomplete.autocomplete(parser)
     args = parser.parse_args()
 
-    output = PdfFileWriter()
+    output = PdfWriter()
     # Load the PDFs
     with args.front_file.open(mode="rb") as front_file, args.back_file.open(
         mode="rb"
     ) as back_file:
-        input_front = PdfFileReader(front_file)
-        input_back = PdfFileReader(back_file)
+        input_front = PdfReader(front_file)
+        input_back = PdfReader(back_file)
         # Generate combined sequence of pages from both PDFs
         combined = filter(
             bool, interleave_longest(input_front.pages, reversed(input_back.pages))
         )
         for page in combined:
-            output.addPage(page)
+            output.add_page(page)
         with args.output_file.open(mode="wb") as output_file:
             output.write(output_file)
 

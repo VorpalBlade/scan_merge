@@ -22,7 +22,7 @@ classifiers=[
 dependencies = [
     "argcomplete",
     "funcy",
-    "pypdf2"
+    "pypdf2 >= 3.0"
 ]
 dynamic = ["version"]
 
